@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { UserController } from './user.controller';
+import { User } from './user.type';
 
 @Injectable()
 export class UserService {
-  private users: any[];
+  private users: User[];
 
   constructor() {
     this.users = [];
@@ -13,12 +14,12 @@ export class UserService {
     return this.users;
   }
 
-  addUser(user: any): string {
+  addUser(user: User): string {
     this.users.push(user);
     return 'user added successfully !';
   }
 
-  getUser(id: number, age: number): any {
+  getUser(id: number, age: number): User | string {
     const user = this.users[id - 1];
     if (user.age === age) {
       return user;
