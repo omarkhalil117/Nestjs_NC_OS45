@@ -31,7 +31,7 @@ export class UserController {
   }
 
   @Get(':id')
-  getById(@Param('id') id: number, @Query('age') age: number): User | string {
+  getById(@Param('id') id: number, @Query('age') age: number): User {
     return this.userService.getUser(+id, +age);
   }
 

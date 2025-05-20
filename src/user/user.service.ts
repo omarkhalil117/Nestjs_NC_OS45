@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserController } from './user.controller';
 import { User } from './user.type';
 
@@ -19,18 +24,19 @@ export class UserService {
     return 'user added successfully !';
   }
 
-  getUser(id: number, age: number): User | string {
+  getUser(id: number, age: number): User {
     const user = this.users[id - 1];
     if (user.age === age) {
       return user;
     }
 
-    return 'not found';
+    // throw new NotFoundException('User not found');
+    throw new HttpException('user not found !', HttpStatus.NOT_FOUND);
   }
 
   deleteUser(id: number): string {
     if (id < 0 || id > this.users.length) {
-      return 'user not found';
+      throw new NotFoundException('User not found');
     }
     this.users.splice(id - 1, 1);
     return 'user deleted !';
